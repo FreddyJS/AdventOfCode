@@ -56,7 +56,6 @@ void LinkedList<T>::addLast(T data) {
     LinkedListItem<T>* item;
     if ( this->first == NULL && this->last == NULL ) {
         item = new LinkedListItem<T>(data);
-        item->setData(data);
         this->first = item;
         this->last = item;
 
@@ -158,16 +157,20 @@ bool LinkedList<T>::remove(size_t index) {
     }
 
     if ( p == this->last && this->last != NULL) {
-        (p->previous)->next = NULL;
-        this->last = p->previous;
+        if (p != this->first) {
+            (p->previous)->next = NULL;
+            this->last = p->previous;
+        }
         
         delete p;
         this->size--;
         
         return true;
     } else if ( p == this->first && this->first != NULL) {
-        (p->next)->previous = NULL;
-        this->first = p->next;
+        if (p != this->last) {
+            (p->next)->previous = NULL;
+            this->first = p->next;
+        }
 
         delete p;
         this->size--;

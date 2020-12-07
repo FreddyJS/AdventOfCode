@@ -1,5 +1,5 @@
 FILE=bin/hellomake
-if [[ -f /home/sebas/Documentos/AdventOfCode/Day4/Makefile ]];then
+if [[ -f /home/sebas/Documentos/AdventOfCode/2020/Day4/Makefile ]];then
     echo "Do you want to compile? (y/*)"
     read str
     if [ "$str" = "y" ];then
@@ -9,4 +9,4 @@ else
     make
 fi
 rm obj/*.gc*
-./bin/hellomake
+./bin/hellomake input.txt
