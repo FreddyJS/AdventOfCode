@@ -1,5 +1,4 @@
-FILE=bin/hellomake
-if [[ -f /home/sebas/Documentos/AdventOfCode/Day3/Makefile ]];then
+if [[ -f ./bin/hellomake ]];then
     echo "Do you want to compile? (y/*)"
     read str
     if [ "$str" = "y" ];then
@@ -8,5 +7,4 @@ if [[ -f /home/sebas/Documentos/AdventOfCode/Day3/Makefile ]];then
 else
     make
 fi
-rm obj/*.gc*
-./bin/hellomake
+./bin/hellomake ejercicio3.txt

@@ -42,8 +42,8 @@ class LinkedList{
         LinkedList(LinkedList<T>* list) {
             this->copyLinkedList(list);
 
-            this->current = list->current;
-            this->index = list->index;
+            this->current = NULL;
+            this->index = 0;
         }
         
         size_t size = 0;

@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 	int trees4 = getTrees(argv, 7, 1);
     int trees5 = getTrees(argv, 1, 2);
 
-    cout << "The final result is: " << trees1*trees2*trees3*trees4*trees5 << endl;
+    cout << "\nThe final result is: " << trees1*trees2*trees3*trees4*trees5 << endl;
 
 	return 0;
 }

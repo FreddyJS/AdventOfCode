@@ -1,12 +1,12 @@
-// Returns the pointer to the internal class Item
+// Returns the pointer to the LinkedListItem
 // Returns a null pointer if the item on the position requested not exists
+// \@index: number of the position of the desired item
 //
 // Implements a current pointer to improve the time of the searchs
 template <class T>
 LinkedListItem<T>* LinkedList<T>::getItemPtr(size_t index) {
     if (this->first == NULL) return NULL;
 
-    // The list has at least one item
     LinkedListItem<T>* p = this->current;
     LinkedListItem<T>* paux = NULL;
     size_t n = this->index;
@@ -50,19 +50,17 @@ LinkedListItem<T>* LinkedList<T>::getItemPtr(size_t index) {
 
 
 // Adds an item to the back of the list
-// Returns true if success
+// \@data: the data to store
 template <class T>
-bool LinkedList<T>::addLast(T data) {
+void LinkedList<T>::addLast(T data) {
     LinkedListItem<T>* item;
     if ( this->first == NULL && this->last == NULL ) {
         item = new LinkedListItem<T>(data);
-        item->setData(data);
         this->first = item;
         this->last = item;
 
         this->size++;
 
-        return true;
     } else {
         item = new LinkedListItem<T>(data);
         (this->last)->next = item;
@@ -71,14 +69,12 @@ bool LinkedList<T>::addLast(T data) {
         this->last = item;
         this->size++;
 
-        return true;
     }
-
-    return false;
 }
 
-
 // Returns the first item of the list
+//
+// Throws exception if the list is empty
 template <class T>
 T LinkedList<T>::getFirst() {
     if (this->first != NULL) {
@@ -91,6 +87,8 @@ T LinkedList<T>::getFirst() {
 }
 
 // Returns the last item of the list
+//
+// Throws exception if the list is empty
 template <class T>
 T LinkedList<T>::getLast() {
     if (this->last != NULL) {
@@ -104,7 +102,8 @@ T LinkedList<T>::getLast() {
 
 
 // Returns the requested item on the position [index]
-// Range from 0 to the size of the list -1
+// Range [0, list.size-1] if the list is not empty
+// \@index: number of the position of the desired item
 //
 // Throws exception if the item not exists
 template <class T>
@@ -121,7 +120,10 @@ T LinkedList<T>::get(size_t index){
 }
 
 // Replaces the data of the item on the position [index]
-// Range from 0 to the size of the list -1
+// Range [0, list.size-1] if the list is not empty
+//
+// \@index: number of the position of the item to change
+// \@data: the data to store
 //
 // Throws exception if the item not exists
 template <class T>
@@ -139,6 +141,8 @@ void LinkedList<T>::set(size_t index, T data){
 
 
 // Remove the item on the position [index] if exists
+// \@index: number of the position of the item to remove
+//
 // Returns true if success
 template <class T>
 bool LinkedList<T>::remove(size_t index) {
@@ -153,16 +157,20 @@ bool LinkedList<T>::remove(size_t index) {
     }
 
     if ( p == this->last && this->last != NULL) {
-        (p->previous)->next = NULL;
-        this->last = p->previous;
+        if (p != this->first) {
+            (p->previous)->next = NULL;
+            this->last = p->previous;
+        }
         
         delete p;
         this->size--;
         
         return true;
     } else if ( p == this->first && this->first != NULL) {
-        (p->next)->previous = NULL;
-        this->first = p->next;
+        if (p != this->last) {
+            (p->next)->previous = NULL;
+            this->first = p->next;
+        }
 
         delete p;
         this->size--;
@@ -188,15 +196,16 @@ bool LinkedList<T>::remove(size_t index) {
 
 
 // Clears the list by calling the destructor of any Item stored
-// Returns true if success
 //
-// Automatic deletion when the list is destroyed
+// Automatic called when the list is destroyed
 template <class T>
-bool LinkedList<T>::clear() {
-    LinkedListItem<T>* p = this->last;
+void LinkedList<T>::clear() {
+    LinkedListItem<T>* p;
     LinkedListItem<T>* paux;
 
-    if ( p != NULL) {
+    if (this->size > 0) {
+        p = this->last;
+
         while ( (paux = p->previous) ) {
             delete p;
             this->size--;
@@ -212,14 +221,9 @@ bool LinkedList<T>::clear() {
         this->last = NULL;
         this->first = NULL;
         
-        if ( this->size == 0 ) {
-            this->current = NULL;
-            this->index = 0;
-            return true;
-        }
+        this->current = NULL;
+        this->index = 0;
     }
-    
-    return false;
 }
 
 
@@ -257,6 +261,12 @@ bool LinkedList<T>::shiftr() {
 }
 
 
+
+// Shifts the items of the list to the right N times
+// Cyclic Shift Right
+// \@shifts: the number of shifts to do
+//
+// Returns true if success
 template <class T>
 bool LinkedList<T>::shiftr(size_t shifts) {
     for (size_t i = 0; i < shifts; i++) {
@@ -267,9 +277,8 @@ bool LinkedList<T>::shiftr(size_t shifts) {
     return true;
 }
 
-
 // Shifts the items of the list to the left one position
-// Cyclic Shift Right
+// Cyclic Shift Left
 // Returns true if success
 template <class T>
 bool LinkedList<T>::shiftl() {
@@ -301,6 +310,13 @@ bool LinkedList<T>::shiftl() {
     return false;
 }
 
+
+
+// Shifts the items of the list to the left one position
+// Cyclic Shift Left
+// \@shifts: the number of shifts to do
+//
+// Returns true if success
 template <class T>
 bool LinkedList<T>::shiftl(size_t shifts) {
     for (size_t i = 0; i < shifts; i++) {
@@ -312,7 +328,8 @@ bool LinkedList<T>::shiftl(size_t shifts) {
 }
 
 // Copy all the items from one list to the new list
-// Used on copy constructor
+// Used on the copy constructor
+// \@list: LinkedList pointer to the list to copy
 //
 // Allocates new memory for every item on the new list
 template <class T>

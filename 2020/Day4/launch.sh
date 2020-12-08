@@ -1,5 +1,4 @@
-FILE=bin/hellomake
-if [[ -f /home/sebas/Documentos/AdventOfCode/2020/Day4/Makefile ]];then
+if [[ -f ./bin/hellomake ]];then
     echo "Do you want to compile? (y/*)"
     read str
     if [ "$str" = "y" ];then
