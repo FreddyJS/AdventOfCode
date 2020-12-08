@@ -5,7 +5,196 @@
 
 using namespace std;
 
+bool checkField(char* start) {
+    char* data;
+    int len;
+    if (strncmp(start, "pid", 3) == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+        
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
 
+        if (strlen(data) != 9) {
+            return false;
+        }
+
+        for (size_t i = 0; i < len; i++){
+            if (!isdigit(*(data+i))) {
+                return false;
+            }
+        }
+        
+    } else if (strncmp(start, "byr", 3)  == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
+
+        if (len != 4) {
+            return false;
+        }
+        try {
+            int x = stoi(data);
+            if (x > 2002 || x < 1920) {
+                return false;
+            }
+        }
+        catch(const std::exception& e){
+            std::cerr << e.what() << '\n';
+            return false;
+        }
+        
+    } else if (strncmp(start, "iyr", 3)  == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
+
+        if (len != 4) {
+            return false;
+        }
+        try {
+            int x = stoi(data);
+            if (x > 2020 || x < 2010) {
+                return false;
+            }
+        }
+        catch(const std::exception& e){
+            std::cerr << e.what() << '\n';
+            return false;
+        }
+
+    } else if (strncmp(start, "eyr", 3)  == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
+
+        if (len != 4) {
+            return false;
+        }
+        try {
+            int x = stoi(data);
+            if (x > 2030 || x < 2020) {
+                return false;
+            }
+        }
+        catch(const std::exception& e){
+            std::cerr << e.what() << '\n';
+            return false;
+        }
+
+    } else if (strncmp(start, "hgt", 3)  == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
+
+        if (*(data+(len-1)) == 'm') {
+            if (isdigit(*data)) {
+                int x = stoi(data);
+                if (x > 193 || x < 150) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+
+        } else if (*(data+(len-1)) == 'n') {
+            if (isdigit(*data)) {
+                int x = stoi(data);
+                if (x > 76 || x < 59) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    } else if (strncmp(start, "ecl", 3)  == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
+
+        if (strcmp(data, "amb") == 0) {
+            return true;
+        }
+
+        if (strcmp(data, "blu") == 0) {
+            return true;
+        }
+
+        if (strcmp(data, "brn") == 0) {
+            return true;
+        }
+
+        if (strcmp(data, "gry") == 0) {
+            return true;
+        }
+
+        if (strcmp(data, "grn") == 0) {
+            return true;
+        }
+
+        if (strcmp(data, "hzl") == 0) {
+            return true;
+        }
+
+        if (strcmp(data, "oth") == 0) {
+            return true;
+        }
+
+        return false;
+        
+    } else if (strncmp(start, "hcl", 3)  == 0) {
+        data = strtok(start, " ");
+        data = strtok(data, ":");
+        cout << " --> " << data << " - ";
+        data = strtok(NULL, ":");
+
+        len = strlen(data);
+        cout << data << ". strlen: " << len << endl;
+
+        if (len != 7) {
+            return false;
+        }
+
+        for (size_t i = 0; i < len; i++) {
+            if (*(data+(len-1)) != '#') {
+                if (!isdigit(*(data+(len-1)))) {
+                    if (*(data+(len-1)) > 'f' || *(data+(len-1)) < 'a') {
+                        return false;
+                    }
+                }
+            }
+        }
+        
+    }
+
+
+    return true;
+}
 int checkValid(string data, LinkedList<string>* fields) {
     char line[data.length()];
     LinkedList<string>* fieldscpy = new LinkedList<string>(fields);
@@ -23,7 +212,10 @@ int checkValid(string data, LinkedList<string>* fields) {
             int comp = strncmp(s.c_str(), start, s.length());
 
             if (comp == 0) {
-                fieldscpy->remove(count);
+                bool validField = checkField(start);
+                if (validField) {
+                    fieldscpy->remove(count);
+                }
             }
             count++;
         }
