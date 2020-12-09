@@ -87,11 +87,8 @@ int main(int argc, char* argv[]) {
             letters->destruct();
             letters = new LinkedList<letter>(letterscpy);
 
-            cout << "The group answered: " << g_answers << " times!\n" << endl;
             n_group = 0;
         } else {
-            cout << readed << endl;
-
             int answers = checkAnswers(line, letters);
             n_group++;
             g_answers += answers;
@@ -100,7 +97,7 @@ int main(int argc, char* argv[]) {
         n_line++;
     }
 
-	cout << "\nReaded " << n_line << " lines!" << endl;
+	cout << "Readed " << n_line << " lines!" << endl;
 
     cout << "The result of the part1 is: " << g_answers << "!" << endl;
     cout << "The result of the part2 is: " << n_allAnswered << "!" << endl;
