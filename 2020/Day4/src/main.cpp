@@ -326,6 +326,7 @@ int main(int argc, char* argv[]) {
     cout << "There are " << valids << " valids passports!" << endl;
 
     clusterFile.close();
+    list->destruct();
 
 	return 0;
 }
