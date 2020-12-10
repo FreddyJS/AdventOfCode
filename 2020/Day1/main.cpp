@@ -23,7 +23,6 @@ int main(int argc, char* argv[]) {
 
 	LinkedList<int>* list = new LinkedList<int>();
 
-
 	while(getline(clusterFile, readed)) {
 		n_line++;
 		int x = stoi(readed);
@@ -35,12 +34,11 @@ int main(int argc, char* argv[]) {
     
     for (size_t i = 0; i < list->size-1; i++) {
         for (size_t j = i+1; j < list->size-1; j++) {
-            /* code */
             int x = list->get(i);
             int y = list->get(j);
 
             int sum = x+y;
-            //cout << x << "+" << y << "=" << sum << endl;
+
             if (sum == 2020) {
                 result = x*y;
                 cout << x << "+" << y << "=" << sum << endl;
@@ -54,13 +52,12 @@ int main(int argc, char* argv[]) {
     for (size_t i = 0; i < list->size-1; i++) {
         for (size_t j = i+1; j < list->size-1; j++) {
             for (size_t k = j+1; k < list->size-1; k++) {
-                /* code */
                 int x = list->get(i);
                 int y = list->get(j);
                 int z = list->get(k);
 
                 int sum = x+y+z;
-                //cout << x << "+" << y << "=" << sum << endl;
+
                 if (sum == 2020) {
                     result = x*y*z;
                     cout << x << "+" << y << "+" << z << "=" << sum << endl;

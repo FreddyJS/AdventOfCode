@@ -189,12 +189,11 @@ bool checkField(char* start) {
                 }
             }
         }
-        
     }
-
 
     return true;
 }
+
 int checkValid(string data, LinkedList<string>* fields) {
     char line[data.length()];
     LinkedList<string>* fieldscpy = new LinkedList<string>(fields);
@@ -259,7 +258,6 @@ int checkValid(string data, LinkedList<string>* fields) {
 
 
 int main(int argc, char* argv[]) {
-    //char *fields[8] = {"ecl", "pid", "eyr", "hcl", "byr", "iyr", "hgt", "cid"};
     LinkedList<string>* fields = new LinkedList<string>();
 
     fields->addLast("ecl");

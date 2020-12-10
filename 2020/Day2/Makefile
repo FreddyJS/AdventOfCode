@@ -9,3 +9,7 @@ CFLAGS =-Wall -g -I./$(INC_DIR)
 main: main.cpp 
 	$(CC) $(CFLAGS) main.cpp -o main 
  
+clean:
+	rm main
+
+.PHONY: clean

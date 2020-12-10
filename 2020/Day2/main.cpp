@@ -25,7 +25,6 @@ bool checkPass(struct password p) {
         paux++;
     }
 
-    //cout << p.letter << " times: " << count << " --> ";
     if ( count >= p.minL && count <= p.maxL ) {
         return true;
     }
@@ -89,7 +88,6 @@ int main(int argc, char* argv[]) {
         strcpy(p.psswd, psswd);
 
         bool correct = checkPass(p);
-        //cout << minL << "-" << maxL << " " << *passL << ": " << p.psswd << ": " << correct << endl;
 
         if (correct) {
             listCorrect->addLast(p);
@@ -112,8 +110,6 @@ int main(int argc, char* argv[]) {
     for (size_t i = 0; i < listAll->size; i++) {
         struct password p = listAll->get(i);
         bool correct = checkPass2(p);
-        //cout << p.minL << "-" << p.maxL << " " << p.letter << ": " << p.psswd << ": " << correct << endl;
-
 
         if (correct) {
             listCorrect->addLast(p);

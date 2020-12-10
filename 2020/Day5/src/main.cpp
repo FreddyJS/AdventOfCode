@@ -37,9 +37,6 @@ int getID(char* line) {
                 minR = minR + spaceR/2 +1;
             }
         }
-
-    //cout << " --> min:[" << minR << ", " << minC << "] max:[";
-    //cout << maxR << "," << maxC << "]" << " Data: " << *(line+i) << endl;
     }
 
     int result = maxR*8 +maxC;
@@ -68,7 +65,6 @@ int main(int argc, char* argv[]) {
         char line[readed.length()];
         strcpy(line, readed.c_str());
 
-        //cout << "\n" << readed << endl;
         int id = getID(line);
         list->addLast(id);
         if (id > maxID) {
@@ -86,8 +82,6 @@ int main(int argc, char* argv[]) {
         int founded = 0;
         bool error = false;
         for (size_t j = 0; j < list->size; j++) {
-            //cout << "ID: " << list->get(j) << endl;
-
             if (list->get(j) == i+1 || list->get(j) == i-1) {
                 founded++;
             }

@@ -18,9 +18,8 @@ int checkAnswers(char* line, LinkedList<letter>* letters) {
         for (size_t j = 0; j < letters->size; j++) {
             char c = letters->get(j).l;
             if (*(line+i) == c) {
-                //cout << " --> " << *(line+i) << " Letter: " << letters->get(j).l << endl;
-
                 letter let = letters->get(j);
+                
                 if (let.n == 0) {
                     answers++;
                 }

@@ -56,6 +56,7 @@ void LinkedList<T>::addLast(T data) {
     LinkedListItem<T>* item;
     if ( this->first == NULL && this->last == NULL ) {
         item = new LinkedListItem<T>(data);
+        item->setData(data);
         this->first = item;
         this->last = item;
 

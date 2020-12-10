@@ -5,7 +5,10 @@
 
 using namespace std;
 
+
 LinkedList<string>* bags = new LinkedList<string>();
+LinkedList<string>* subBags = new LinkedList<string>();
+LinkedList<int>* nSubBags = new LinkedList<int>();
 
 bool bagSaved(string bag) {
     for (size_t i = 0; i < bags->size; i++) {
@@ -29,8 +32,6 @@ bool checkIfContain(string line, string search, int n) {
             bags->addLast(result);
         }
 
-        //cout << line << endl;
-        //cout << "Founded the bag: " << result << "\n" << endl;
         return true;
     }
 
@@ -42,9 +43,6 @@ bool checkIfContain(string line, string search, int n) {
             pos = line.find(" contain ");
             result = line.substr(0, pos-1);
             
-            //cout << line << endl;
-            //cout << " --> Founded the bag: " << bags->get(i) << " in the bag " << result << "\n" << endl;
-
             if (!bagSaved(result)) {
                 bags->addLast(result);
             }
@@ -71,9 +69,118 @@ void checkBags(LinkedList<string>* input) {
         }
     }
 
+    cout << "The number of bags that can contain shiny gold bags are: " << n_bags << endl;
+}
+
+bool subBagSaved(string bag) {
+
+    if (bag.at(0) == ' ') {
+        return true;
+    }
+
+    for (size_t i = 0; i < subBags->size; i++) {
+        if (subBags->get(i).compare(bag) == 0) {
+            return true;
+        }
+    }
     
 
-    cout << "The number of bags that can contain shiny gold bags are: " << n_bags << endl;
+    return false;
+}
+
+void checkBag(LinkedList<string>* input) {
+    string readed;
+    int n_bags = 0;
+
+    for (size_t i = 0; i < subBags->size; i++) {
+	    for (size_t j = 0; j < input->size; j++) {
+        readed = input->get(j);
+        //cout << j << ". " << readed << ". List size: " << subBags->size << endl;
+
+            if (strncmp(readed.c_str(), subBags->get(i).c_str(), subBags->get(i).length()) == 0) {
+                size_t pos = readed.find(" contain ");
+                pos += strlen(" contain ");
+                string result = readed.substr(pos);
+
+                size_t aux = result.find(", ");
+                size_t posR = 0;
+
+                if (aux <= result.length()) {
+                    int n = 0;
+
+                    while (aux <= result.length()) {
+                        string s = result.substr(posR, aux-posR);
+                        size_t aux2 = aux;
+
+                        if (s.at(s.length()-1) == 's') {
+                            s.at(s.length()-1) = '\0';
+                        }
+                        
+                        char c_n = *(s.c_str());    
+                        n = 0;
+
+                        s = s.substr(2);
+
+                        if (isdigit(c_n)) {
+                            n = stoi(&c_n);
+                            n_bags++;
+                        }         
+
+                        if (!subBagSaved(s)) {
+                            subBags->addLast(s);
+                            nSubBags->addLast(n);
+
+                        }
+
+                        aux = result.find(", ", aux+1);
+                        posR = aux2+2;
+                    }
+
+                    string s = result.substr(posR, result.length()-posR-1);
+
+                    if (s.at(s.length()-1) == 's') {
+                            s.at(s.length()-1) = '\0';
+                    }
+                        
+                    
+                    char c_n = *(s.c_str());    
+                    n = 0;
+
+                    s = s.substr(2);
+
+                    if (isdigit(c_n)) {
+                        n = stoi(&c_n);
+                        n_bags++;
+                    }       
+
+
+                    if (!subBagSaved(s)) {
+                            subBags->addLast(s);
+                            nSubBags->addLast(n);
+                    }
+
+                } else {
+                    pos = readed.find(" contain ");
+                    pos += strlen(" contain ");
+                    result = readed.substr(pos);
+
+                    char c_n = *(result.c_str());    
+                    int n = 0;
+
+                    if (isdigit(c_n)) {
+                        n = stoi(&c_n);
+                        n_bags++;
+                    }         
+
+                    result = readed.substr(pos+2, readed.length() - (pos+3) );
+                    if (!subBagSaved(result)) {
+                        subBags->addLast(result);
+                        nSubBags->addLast(n);
+                    }
+                }
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -117,9 +224,34 @@ int main(int argc, char* argv[]) {
 
     cout << "\033[1;31mThe final number of bags that can contain shiny gold bags are: " << bags->size << " bags!\n\033[0m" << endl;
 
+    bags->clear();
+
+    subBags->addLast("shiny gold bag");
+    nSubBags->addLast(0);
+
+
+
+    n_bags = subBags->size;
+    n_loops = 1;
     cout << "\t\t\033[1;34m---------- Day 7 Part 2 ----------\033[0m" << endl;
+    do {
+        cout << "Loop " << n_loops << "!" << endl;
+        n_bags = subBags->size;
+        checkBag(input);
+
+        n_loops++;
+        cout << "The list has: " << subBags->size << endl;
+    } while(n_bags != subBags->size);
+
+
+    for (size_t i = 0; i < subBags->size; i++) {
+        cout << "\tWe have " << nSubBags->get(i) << " " << subBags->get(i) << endl;
+    }
+    
 
     bags->destruct();
-
+    input->destruct();
+    subBags->destruct();
+    nSubBags->destruct();
     return 0;
 }

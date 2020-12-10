@@ -18,8 +18,6 @@ ifstream clusterFile;
     int saves = 0;
     int trees = 0;
 
-	//LinkedList<char[1024]>* list = new LinkedList<char[1024]>();
-
 	while(getline(clusterFile, readed)) {
         char line[readed.length()];
         strcpy(line, readed.c_str());
@@ -55,7 +53,6 @@ ifstream clusterFile;
                 }
             }
 
-            //cout << line << endl;    
             n_line++;
         }
     }
