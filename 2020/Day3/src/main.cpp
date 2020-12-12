@@ -6,7 +6,7 @@
 using namespace std;
 
 int getTrees(char* argv[], int moveX, int moveY) {
-ifstream clusterFile;
+    ifstream clusterFile;
 	clusterFile.open(argv[1]);
 
 	string readed;
