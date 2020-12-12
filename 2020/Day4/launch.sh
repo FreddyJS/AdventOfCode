@@ -1,3 +1,4 @@
+#!/bin/bash
 if [[ -f ./bin/hellomake ]];then
     echo "Do you want to compile? (y/*)"
     read str

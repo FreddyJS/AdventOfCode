@@ -1,3 +1,4 @@
+#!/bin/bash
 if [[ -f ./bin/hellomake ]];then
     echo "Do you want to compile? (y/*)"
     read str
@@ -7,4 +8,4 @@ if [[ -f ./bin/hellomake ]];then
 else
     make
 fi
-./bin/hellomake ejercicio3.txt
+./bin/hellomake input.txt

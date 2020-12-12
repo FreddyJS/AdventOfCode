@@ -50,12 +50,10 @@ bool checkPass2(struct password p) {
 
 
 int main(int argc, char* argv[]) {
-	cout << "\nHey, im dope, give me some clusters!" << endl;
-
 	if (argc != 2) {
-		cout << "Give me a file with the cluster(s)'s points!" << endl;
+		cout << "Give me a file with to use as the input data!" << endl;
 	} else {
-		cout << "Thanks! I will analyze the file: " << argv[1] << "\n" << endl;
+		cout << "The input data file is: " << argv[1] << endl;
 	}
 
 	ifstream clusterFile;
@@ -98,11 +96,11 @@ int main(int argc, char* argv[]) {
         listAll->addLast(p);
 	}
 
-	cout << "\nReaded " << n_line << " lines!" << endl;
+	cout << "Readed " << n_line << " lines!\n" << endl;
 
-    cout << "\nPart 1!" << endl;
+    cout << "\t\t\033[1;34m---------- Day 2 Part 1 ----------\033[0m" << endl;
     cout << "There are " << listCorrect->size << " correct paswords." << endl;
-    cout << "There are " << listWrong->size << " incorrect paswords." << endl;
+    cout << "There are " << listWrong->size << " incorrect paswords.\n" << endl;
 
     listCorrect->clear();
     listWrong->clear();
@@ -118,7 +116,7 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    cout << "\nPart 2!" << endl;
+    cout << "\t\t\033[1;34m---------- Day 2 Part 2 ----------\033[0m" << endl;
     cout << "There are " << listCorrect->size << " correct paswords." << endl;
     cout << "There are " << listWrong->size << " incorrect paswords." << endl;
 

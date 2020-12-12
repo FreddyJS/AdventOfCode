@@ -21,7 +21,7 @@ bool checkField(char* start) {
             return false;
         }
 
-        for (size_t i = 0; i < len; i++){
+        for (int i = 0; i < len; i++){
             if (!isdigit(*(data+i))) {
                 return false;
             }
@@ -180,7 +180,7 @@ bool checkField(char* start) {
             return false;
         }
 
-        for (size_t i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++) {
             if (*(data+(len-1)) != '#') {
                 if (!isdigit(*(data+(len-1)))) {
                     if (*(data+(len-1)) > 'f' || *(data+(len-1)) < 'a') {
@@ -270,7 +270,6 @@ int main(int argc, char* argv[]) {
     fields->addLast("cid");
 
     int valids = 0;
-    int semivalid = 0;
 
 	cout << "\nHey, im dope, give me some clusters!" << endl;
 

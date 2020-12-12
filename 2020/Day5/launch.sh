@@ -1,3 +1,4 @@
+#!/bin/bash
 if [[ -f ./bin/day5 ]];then
     echo "Do you want to compile? (y/*)"
     read str
