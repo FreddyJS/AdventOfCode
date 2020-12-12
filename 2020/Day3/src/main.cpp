@@ -11,7 +11,7 @@ ifstream clusterFile;
 
 	string readed;
     bool checked = false;
-	int n_line = 1;
+	int n_line = 0;
     int pos = 0;
     int posy = 1;
     int lim = 0;
@@ -19,6 +19,8 @@ ifstream clusterFile;
     int trees = 0;
 
 	while(getline(clusterFile, readed)) {
+        n_line++;
+
         char line[readed.length()];
         strcpy(line, readed.c_str());
         lim = strlen(line);
@@ -52,11 +54,10 @@ ifstream clusterFile;
                     }
                 }
             }
-
-            n_line++;
         }
     }
 
+    cout << "Readed " << n_line << " lines!" << endl;
     cout << "There are " << trees << " trees! - There are " << saves << " save spots!\n" << endl;
 
     clusterFile.close();

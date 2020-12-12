@@ -59,9 +59,11 @@ int main(int argc, char* argv[]) {
     LinkedList<int>* list = new LinkedList<int>();
     int maxID = 0;
 	string readed;
-	int n_line = 1;
+	int n_line = 0;
 
 	while(getline(clusterFile, readed)) {
+        n_line++;
+
         char line[readed.length()];
         strcpy(line, readed.c_str());
 
@@ -70,8 +72,6 @@ int main(int argc, char* argv[]) {
         if (id > maxID) {
             maxID = id;
         }
-
-        n_line++;
     }
 
 	cout << "Readed " << n_line << " lines!" << endl;

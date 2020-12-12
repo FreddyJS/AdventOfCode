@@ -152,18 +152,19 @@ bool checkField(char* start) {
 }
 
 int checkValid(string data, LinkedList<string>* fields) {
-    char line[data.length()];
     LinkedList<string>* fieldscpy = new LinkedList<string>(fields);
+    
+    char line[data.length()];
     strcpy(line, data.c_str());
 
-    size_t pos = 0;
-    size_t nspace = 0;
-    size_t count = 0;
     bool fin = false;
     char* start = line;
+    size_t pos = 0;
 
     while (!fin) {
-        count = 0;
+        size_t nspace = 0;
+        size_t count = 0;
+
         for (string s: *fieldscpy) {
             int comp = strncmp(s.c_str(), start, s.length());
 
@@ -178,7 +179,7 @@ int checkValid(string data, LinkedList<string>* fields) {
 
         nspace = data.find(" ", pos);
         
-        if (nspace != pos && nspace < data.length()) {
+        if (nspace < data.length()) {
             start = line;
             if (data.length() > nspace) {
                 start += nspace+1;
@@ -259,16 +260,21 @@ int main(int argc, char* argv[]) {
 
 	string readed;
     string data;
-	int n_line = 1;
+	int n_line = 0;
     int lim = 0;
 
 	while(getline(clusterFile, readed)) {
+        n_line++;
+        
         char line[readed.length()];
         strcpy(line, readed.c_str());
         lim = strlen(line);
         
-        if (*line == '\0') {
-            if (clusterFile.eof()) data.append(readed);
+        if (*line == '\0' || clusterFile.eof()) {
+            if (clusterFile.eof()) {
+                data.append(readed);
+                data.append(" ");
+            } 
             data.replace(data.length()-1, data.length(), "\0");
             list->addLast(data);
             int valid = checkValid(data, fields);
@@ -278,18 +284,9 @@ int main(int argc, char* argv[]) {
             data = "";
         } else if (lim > 0){
             data.append(readed);
-            data.append(" ");
-            if (clusterFile.eof()) {
-                data.replace(data.length()-1, data.length(), "\0");
-                list->addLast(data);
-               int valid = checkValid(data, fields);
-                if (valid != -1) {
-                    valids++;
-                }
-            }
+            data.append(" ");   
         }
 
-        n_line++;
     }
 
 	cout << "\nReaded " << n_line << " lines!" << endl;
