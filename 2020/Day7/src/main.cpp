@@ -193,18 +193,18 @@ int main(int argc, char* argv[]) {
     LinkedList<string>* input = new LinkedList<string>();
 
     string readed;
-	int n_line = 1;
+	int n_line = 0;
 
     ifstream clusterFile;
 	clusterFile.open(argv[1]);
 
 	while(getline(clusterFile, readed)) {
+        n_line++;
 
         if (readed.length() > 0 || clusterFile.eof()) {
             input->addLast(readed);
         }
         
-        n_line++;
     }
 
 	cout << "Readed " << n_line << " lines from " << argv[1] << "\n" << endl;
