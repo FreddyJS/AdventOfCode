@@ -7,17 +7,16 @@ using namespace std;
 
 bool checkField(char* start) {
     char* data;
-    int len;
-    if (strncmp(start, "pid", 3) == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-        
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
-        if (strlen(data) != 9) {
+    data = strtok(start, " ");
+    data = strtok(data, ":");
+    data = strtok(NULL, ":");
+        
+    int len = strlen(data);
+    
+    if (strncmp(start, "pid", 3) == 0) {
+
+        if (len != 9) {
             return false;
         }
 
@@ -28,13 +27,6 @@ bool checkField(char* start) {
         }
         
     } else if (strncmp(start, "byr", 3)  == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
         if (len != 4) {
             return false;
@@ -51,13 +43,6 @@ bool checkField(char* start) {
         }
         
     } else if (strncmp(start, "iyr", 3)  == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
         if (len != 4) {
             return false;
@@ -74,13 +59,6 @@ bool checkField(char* start) {
         }
 
     } else if (strncmp(start, "eyr", 3)  == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
         if (len != 4) {
             return false;
@@ -97,13 +75,6 @@ bool checkField(char* start) {
         }
 
     } else if (strncmp(start, "hgt", 3)  == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
         if (*(data+(len-1)) == 'm') {
             if (isdigit(*data)) {
@@ -129,13 +100,6 @@ bool checkField(char* start) {
         }
 
     } else if (strncmp(start, "ecl", 3)  == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
         if (strcmp(data, "amb") == 0) {
             return true;
@@ -168,13 +132,6 @@ bool checkField(char* start) {
         return false;
         
     } else if (strncmp(start, "hcl", 3)  == 0) {
-        data = strtok(start, " ");
-        data = strtok(data, ":");
-        cout << " --> " << data << " - ";
-        data = strtok(NULL, ":");
-
-        len = strlen(data);
-        cout << data << ". strlen: " << len << endl;
 
         if (len != 7) {
             return false;
@@ -233,26 +190,42 @@ int checkValid(string data, LinkedList<string>* fields) {
         } else {
             fin = true;
         }
-
-
     }
 
-    cout << "\nWe miss " << fieldscpy->size << " thing!" << endl;
+    cout << "\033[1;33m\nPassport: \033[0m" << data << endl;
+    cout << "\033[1;34mMissing " << fieldscpy->size << " field! \033[0m";
     if (fieldscpy->size == 0) {
-        cout << "Valid passport! - " << data << endl;
+        cout << "\033[1;31mValid passport!\033[0m" << endl;
         return 1;
     } else {
-        for (string s : *fieldscpy) {
-            cout << s << " - ";
-        }
-    
         if (fieldscpy->size == 1 && fieldscpy->get(0).compare("cid") == 0) {
-            cout << "\"Valid passport\"! - " << data << endl;
+            cout << "\033[1;31mValid passport!\033[0m" << endl;
+
+            cout << "\033[1;35mMissing/Wrong: \033[0m";
+            for (string s : *fieldscpy) {
+                if (s.compare(fieldscpy->getLast()) == 0) {
+                    cout << s << endl;
+                } else {
+                    cout << s << " - ";
+                }
+            }
+
             return 0;
         }
+
+        cout << "\033[1;31mInvalid passport!\033[0m" << endl;
+        cout << "\033[1;35mMissing/Wrong: \033[0m";
+
+        for (string s : *fieldscpy) {
+            if (s.compare(fieldscpy->getLast()) == 0) {
+                cout << s << endl;
+            } else {
+                cout << s << " - ";
+            }
+        }
+    
     }
 
-    cout << "Invalid passport: " << data << endl;
     return -1;
 }
 
